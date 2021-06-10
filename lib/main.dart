@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './Pages/first_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,24 +14,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: FirstPage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Recipes"),
-      ),
-      body: Center(
-        child: Text("This is recipes app"),
-      ),
-    );
-  }
-}
