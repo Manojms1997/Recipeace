@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './Pages/first_page.dart';
+import './Pages/recipe_details_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,6 +16,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: FirstPage(),
+      routes: {
+        RecipeDetailsPage.recipeDetailsScreenRoute: (ctx) => RecipeDetailsPage()
+      },
     );
   }
 }
