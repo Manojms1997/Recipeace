@@ -14,8 +14,8 @@ class RecipeDetailsPage extends StatelessWidget {
     final duration = routeArgs['duration'];
     final description = routeArgs['description'];
     final ingredients = routeArgs['ingredients'];
-    final nutrients = routeArgs['nutrients'];
-    final steps = routeArgs['steps'];
+    final Map<String, String> nutrients = routeArgs['nutrients'];
+    final Map<String, double> steps = routeArgs['steps'];
 
     return Scaffold(
       appBar: AppBar(
@@ -24,8 +24,8 @@ class RecipeDetailsPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Card(
-              elevation: 4,
+            Container(
+              // elevation: 4,
               child: Column(
                 children: [
                   Stack(
@@ -94,11 +94,16 @@ class RecipeDetailsPage extends StatelessWidget {
                 ],
               ),
             ),
-            Card(
-              elevation: 4,
+            Divider(
+              thickness: 4,
+            ),
+            Container(
+              // recipe description
+              // elevation: 4,
               child: Container(
                 width: double.infinity,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Description:',
@@ -111,6 +116,77 @@ class RecipeDetailsPage extends StatelessWidget {
                     )
                   ],
                 ),
+              ),
+            ),
+            Divider(
+              thickness: 4,
+            ),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Nutrients:',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  ),
+                  for (var nutrient in nutrients.keys)
+                    Text(
+                      nutrient + ': ' + nutrients[nutrient],
+                      style: TextStyle(fontSize: 16),
+                    ),
+                ],
+              ),
+            ),
+            Divider(
+              thickness: 4,
+            ),
+            Container(
+              // ingredients
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Ingredients:',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  ),
+                  for (var ingredient in ingredients)
+                    Text(
+                      ingredient,
+                      style: TextStyle(fontSize: 16),
+                    )
+                ],
+              ),
+            ),
+            Divider(
+              thickness: 4,
+            ),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Steps:',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  ),
+                  for (var step in steps.keys)
+                    Column(
+                      children: [
+                        Divider(
+                          thickness: 1,
+                        ),
+                        Text(
+                          step,
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    )
+                ],
               ),
             )
           ],

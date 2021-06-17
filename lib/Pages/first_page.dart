@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:recipes/Pages/add_recipe_page.dart';
 import '../Models/recipe.dart';
 import '../Widgets/recipe_list.dart';
 import '../Data/sample_data.dart';
 
 class FirstPage extends StatelessWidget {
   final List<Recipe> allRecipes = sample_recipes;
+
+  void addRecipe(BuildContext ctx)
+  {
+    Navigator.of(ctx).pushNamed(AddRecipePage.addRecipePageRoute);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +49,15 @@ class FirstPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Add your onPressed code here!
+          addRecipe(context);
+        },
+        label: const Text('Add recipe'),
+        icon: const Icon(Icons.add),
+        backgroundColor: Colors.cyan,
       ),
     );
   }
