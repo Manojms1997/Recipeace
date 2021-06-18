@@ -9,6 +9,13 @@ class AddRecipePage extends StatefulWidget {
 }
 
 class _AddRecipePageState extends State<AddRecipePage> {
+  String id;
+  String title;
+  double rating;
+  String duration = '';
+  String imageUrl = '';
+  String description = '';
+  String instruction = '';
   bool isVegan = false;
   bool isVegetarian = false;
   Map<String, String> nutrients = {};
@@ -30,10 +37,49 @@ class _AddRecipePageState extends State<AddRecipePage> {
   final stepDurationController = TextEditingController();
   final instructionController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
 
-  submitRecipe(BuildContext ctx)
-  {
+  submitRecipe(BuildContext ctx) {
+    if (_formKey.currentState.validate()) {
+      title = titleController.text;
+      id = title;
+      imageUrl = imageURLController.text;
+      description = descriptionController.text;
+      rating = double.parse(raingController.text);
+      duration = durationController.text;
+      instruction = instructionController.text;
+      print("instruction: "+instruction+" is of the type:"+ instruction.runtimeType.toString());
+      print("title: "+title+" is of the type:"+ title.runtimeType.toString());
+      print("imageUrl: "+imageUrl+" is of the type:"+ imageUrl.runtimeType.toString());
+      print("description: "+description+" is of the type:"+ description.runtimeType.toString());
+      print("rating: "+rating.toString()+" is of the type:"+ rating.runtimeType.toString());
+      print("duration: "+duration+" is of the type:"+ duration.runtimeType.toString());
+      print("isVegan: "+isVegan.toString()+" is of the type:"+ isVegan.runtimeType.toString());
+      print("isVegetarian: "+isVegetarian.toString()+" is of the type:"+ isVegetarian.runtimeType.toString());
+      print("nutrients: "+nutrients.toString()+" is of the type:"+ nutrients.runtimeType.toString());
+      print("tags: "+tags.toString()+" is of the type:"+ tags.runtimeType.toString());
+      print("ingredients: "+ingredients.toString()+" is of the type:"+ ingredients.runtimeType.toString());
+      print("steps: "+steps.toString()+" is of the type:"+ steps.runtimeType.toString());
 
+      Recipe new_recipe = Recipe(
+        id: id,
+        title: title,
+        categories: categories,
+        description: description,
+        duration: duration,
+        imageUrl: imageUrl,
+        ingredients: ingredients,
+        instruction: instruction,
+        isVegan: isVegan,
+        isVegetarian: isVegetarian,
+        nutrients: nutrients,
+        rating: rating,
+        steps: steps,
+        tags: tags
+      );
+
+      print(new_recipe.categories);
+    }
   }
 
   @override
@@ -46,6 +92,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
         child: Container(
           padding: EdgeInsets.all(10),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 Container(
@@ -410,6 +457,16 @@ class _AddRecipePageState extends State<AddRecipePage> {
                       TextFormField(
                         keyboardType: TextInputType.number,
                         controller: raingController,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Rating cannot be empty';
+                          }
+                          if (double.parse(value) > 5 ||
+                              double.parse(value) < 1) {
+                            return 'Invalid rating value';
+                          }
+                          return null;
+                        },
                         // autovalidateMode: AutovalidateMode.always,
                         decoration: InputDecoration(
                             labelText: 'Add Rating',
@@ -443,6 +500,12 @@ class _AddRecipePageState extends State<AddRecipePage> {
                       TextFormField(
                         controller: durationController,
                         // autovalidateMode: AutovalidateMode.always,
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Duration cannot be empty';
+                          }
+                          return null;
+                        },
                         decoration: InputDecoration(
                             labelText: 'Add Duration',
                             hintText:
@@ -606,12 +669,19 @@ class _AddRecipePageState extends State<AddRecipePage> {
                         height: 10,
                       ),
                       TextFormField(
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Instruction cannot be empty';
+                          }
+                          return null;
+                        },
                         controller: instructionController,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         decoration: InputDecoration(
-                            labelText: 'Instructions(optional)',
-                            hintText: 'Add any additional instructions for recipe:',
+                            labelText: 'Instructions',
+                            hintText:
+                                'Add any additional instructions for recipe:',
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10))),
                       ),
