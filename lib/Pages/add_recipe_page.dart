@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Models/recipe.dart';
 
 class AddRecipePage extends StatefulWidget {
   static const addRecipePageRoute = "/add-recipe";
@@ -13,11 +14,27 @@ class _AddRecipePageState extends State<AddRecipePage> {
   Map<String, String> nutrients = {};
   List<String> categories = [];
   List<String> tags = [];
+  List<String> ingredients = [];
+  Map<String, double> steps = {};
+  final titleController = TextEditingController();
+  final imageURLController = TextEditingController();
+  final descriptionController = TextEditingController();
   final nutrientTitleController = TextEditingController();
   final nutrientValueController = TextEditingController();
   final categoryController = TextEditingController();
   final tagController = TextEditingController();
   final raingController = TextEditingController();
+  final durationController = TextEditingController();
+  final ingredientController = TextEditingController();
+  final stepTitleController = TextEditingController();
+  final stepDurationController = TextEditingController();
+  final instructionController = TextEditingController();
+
+
+  submitRecipe(BuildContext ctx)
+  {
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +63,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                         height: 10,
                       ),
                       TextFormField(
+                        controller: titleController,
                         // autovalidateMode: AutovalidateMode.always,
                         validator: (String value) {
                           if (value.isEmpty) {
@@ -63,6 +81,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                         height: 6,
                       ),
                       TextFormField(
+                        controller: imageURLController,
                         // autovalidateMode: AutovalidateMode.always,
                         validator: (String value) {
                           if (value.isEmpty) {
@@ -80,6 +99,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                         height: 6,
                       ),
                       TextFormField(
+                        controller: descriptionController,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         // autovalidateMode: AutovalidateMode.always,
@@ -271,6 +291,9 @@ class _AddRecipePageState extends State<AddRecipePage> {
                           fontSize: 20,
                         ),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       TextFormField(
                         controller: categoryController,
                         // autovalidateMode: AutovalidateMode.always,
@@ -324,6 +347,9 @@ class _AddRecipePageState extends State<AddRecipePage> {
                           fontSize: 20,
                         ),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       TextFormField(
                         controller: tagController,
                         // autovalidateMode: AutovalidateMode.always,
@@ -367,6 +393,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                   color: Colors.black38,
                 ),
                 Container(
+                  padding: EdgeInsets.all(10),
                   width: double.infinity,
                   child: Column(
                     children: [
@@ -376,6 +403,9 @@ class _AddRecipePageState extends State<AddRecipePage> {
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
                         ),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
@@ -390,15 +420,217 @@ class _AddRecipePageState extends State<AddRecipePage> {
                     ],
                   ),
                 ),
-                 Divider(
+                Divider(
                   thickness: 3,
                   color: Colors.black38,
                 ),
-                
+                // To do: Add duration, ingredients, steps, instructions options
+                Container(
+                  padding: EdgeInsets.all(10),
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      Text(
+                        'Duration',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: durationController,
+                        // autovalidateMode: AutovalidateMode.always,
+                        decoration: InputDecoration(
+                            labelText: 'Add Duration',
+                            hintText:
+                                'Enter the total time taken to prepare your recipe',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 3,
+                  color: Colors.black38,
+                ),
+                Container(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Ingredients',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: ingredientController,
+                        // autovalidateMode: AutovalidateMode.always,
+                        decoration: InputDecoration(
+                            labelText: 'Add Ingredient',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          var enteredIngredient = ingredientController.text;
+                          setState(() {
+                            ingredients.add(enteredIngredient);
+                          });
+                          print(tags);
+                          ingredientController.clear();
+                        },
+                        child: Text('Add'),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Ingredients added:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      for (var ingredient in ingredients) Text(ingredient)
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 3,
+                  color: Colors.black38,
+                ),
+                Container(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Steps:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: stepTitleController,
+                        // autovalidateMode: AutovalidateMode.always,
+                        decoration: InputDecoration(
+                            labelText: 'Describe Step',
+                            hintText: 'Describe step with ingredient quantity',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: stepDurationController,
+                        // autovalidateMode: AutovalidateMode.always,
+                        decoration: InputDecoration(
+                            labelText: 'Add Duration',
+                            hintText:
+                                'Duration required in mins. Enter 1 if no time required',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          var enteredStepTitle = stepTitleController.text;
+                          var enteredStepDuration =
+                              double.parse(stepDurationController.text);
+                          setState(() {
+                            steps[enteredStepTitle] = enteredStepDuration;
+                          });
+                          print(tags);
+                          stepTitleController.clear();
+                          stepDurationController.clear();
+                        },
+                        child: Text('Add'),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Steps added:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      for (var step in steps.keys)
+                        Text(
+                          step + ": " + steps[step].toString(),
+                        )
+                    ],
+                  ),
+                ),
+                Divider(
+                  thickness: 3,
+                  color: Colors.black38,
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      Text(
+                        'Instructions',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: instructionController,
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                            labelText: 'Instructions(optional)',
+                            hintText: 'Add any additional instructions for recipe:',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Add your onPressed code here!
+          submitRecipe(context);
+        },
+        label: const Text('SUBMIT'),
+        icon: const Icon(Icons.check),
+        backgroundColor: Colors.cyan,
       ),
     );
   }
