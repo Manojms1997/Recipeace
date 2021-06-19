@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import '../Models/recipe.dart';
 
 class AddRecipePage extends StatefulWidget {
-  static const addRecipePageRoute = "/add-recipe";
+  // static const addRecipePageRoute = "/add-recipe";
+  final Function addRecipe;
+
+  AddRecipePage(this.addRecipe);
 
   @override
   _AddRecipePageState createState() => _AddRecipePageState();
 }
 
 class _AddRecipePageState extends State<AddRecipePage> {
+
+
+ 
   String id;
   String title;
   double rating;
@@ -48,18 +54,18 @@ class _AddRecipePageState extends State<AddRecipePage> {
       rating = double.parse(raingController.text);
       duration = durationController.text;
       instruction = instructionController.text;
-      print("instruction: "+instruction+" is of the type:"+ instruction.runtimeType.toString());
-      print("title: "+title+" is of the type:"+ title.runtimeType.toString());
-      print("imageUrl: "+imageUrl+" is of the type:"+ imageUrl.runtimeType.toString());
-      print("description: "+description+" is of the type:"+ description.runtimeType.toString());
-      print("rating: "+rating.toString()+" is of the type:"+ rating.runtimeType.toString());
-      print("duration: "+duration+" is of the type:"+ duration.runtimeType.toString());
-      print("isVegan: "+isVegan.toString()+" is of the type:"+ isVegan.runtimeType.toString());
-      print("isVegetarian: "+isVegetarian.toString()+" is of the type:"+ isVegetarian.runtimeType.toString());
-      print("nutrients: "+nutrients.toString()+" is of the type:"+ nutrients.runtimeType.toString());
-      print("tags: "+tags.toString()+" is of the type:"+ tags.runtimeType.toString());
-      print("ingredients: "+ingredients.toString()+" is of the type:"+ ingredients.runtimeType.toString());
-      print("steps: "+steps.toString()+" is of the type:"+ steps.runtimeType.toString());
+      // print("instruction: "+instruction+" is of the type:"+ instruction.runtimeType.toString());
+      // print("title: "+title+" is of the type:"+ title.runtimeType.toString());
+      // print("imageUrl: "+imageUrl+" is of the type:"+ imageUrl.runtimeType.toString());
+      // print("description: "+description+" is of the type:"+ description.runtimeType.toString());
+      // print("rating: "+rating.toString()+" is of the type:"+ rating.runtimeType.toString());
+      // print("duration: "+duration+" is of the type:"+ duration.runtimeType.toString());
+      // print("isVegan: "+isVegan.toString()+" is of the type:"+ isVegan.runtimeType.toString());
+      // print("isVegetarian: "+isVegetarian.toString()+" is of the type:"+ isVegetarian.runtimeType.toString());
+      // print("nutrients: "+nutrients.toString()+" is of the type:"+ nutrients.runtimeType.toString());
+      // print("tags: "+tags.toString()+" is of the type:"+ tags.runtimeType.toString());
+      // print("ingredients: "+ingredients.toString()+" is of the type:"+ ingredients.runtimeType.toString());
+      // print("steps: "+steps.toString()+" is of the type:"+ steps.runtimeType.toString());
 
       Recipe new_recipe = Recipe(
         id: id,
@@ -78,12 +84,19 @@ class _AddRecipePageState extends State<AddRecipePage> {
         tags: tags
       );
 
-      print(new_recipe.categories);
+      // print(new_recipe.categories);
+
+      widget.addRecipe(new_recipe);
+
+    Navigator.of(context).pop();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    // final routeArgs =
+    //     ModalRoute.of(context).settings.arguments as Map<String, Object>;
+    // final addRecipeFunc = routeArgs['addRecipe'];
     return Scaffold(
       appBar: AppBar(
         title: Text('Add New Recipe'),

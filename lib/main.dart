@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       home: FirstPage(),
       routes: {
         RecipeDetailsPage.recipeDetailsScreenRoute: (ctx) => RecipeDetailsPage(),
-        AddRecipePage.addRecipePageRoute: (ctx) => AddRecipePage()
+        // AddRecipePage.addRecipePageRoute: (ctx) => AddRecipePage()
       },
     );
   }
